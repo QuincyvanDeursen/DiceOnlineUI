@@ -1,5 +1,5 @@
 [build]
-    base = "DiceOnlineUI/"
+    base = "DiceOnline/"
     command = "npm run build:prod"
     publish = "dist/browser"
 
