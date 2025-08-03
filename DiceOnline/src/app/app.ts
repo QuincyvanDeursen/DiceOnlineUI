@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, Event, NavigationEnd, RouterOutlet} from '@angular/router';
 
 @Component({
@@ -7,7 +7,6 @@ import { Router, Event, NavigationEnd, RouterOutlet} from '@angular/router';
   templateUrl: './app.html'
 })
 export class App implements OnInit{
-  protected readonly title = signal('DiceOnline');
 
     constructor(private router: Router) {}
 
