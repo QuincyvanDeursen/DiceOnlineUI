@@ -1,9 +1,9 @@
 [build]
-    base = "DiceOnline/"
+    base = "diceonline/"
     command = "npm run build:prod"
-    publish = "dist/browser"
+    publish = "dist/"
 
-    [[redirects]]
+[[redirects]]
     from = "/*"
     to = "/index.html"
     status = 200
