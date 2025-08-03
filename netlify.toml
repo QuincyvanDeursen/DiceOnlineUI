@@ -1,6 +1,6 @@
 [build]
     base = "DiceOnline/"
-    publish = "dist/browser"
+    publish = "dist/DiceOnline"
 
 [[redirects]]
     from = "/*"
