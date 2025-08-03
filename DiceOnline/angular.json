@@ -26,6 +26,11 @@
             ],
             "styles": [
               "src/styles.css"
+            ],
+            "scripts": [
+              "node_modules/flyonui/flyonui.js"
+
+
             ]
           },
           "configurations": {
