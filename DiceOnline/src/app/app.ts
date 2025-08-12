@@ -1,17 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Event, NavigationEnd, RouterOutlet} from '@angular/router';
+import { Navbar } from '../shared/Components/nav/navbar/navbar';
+import { Footer } from '../shared/Components/footer/footer';
+import { Observable } from 'rxjs';
+import { LayoutService } from '../core/services/layout-service';
+import { CommonModule } from '@angular/common';
+import { DiceCursor } from '../shared/Components/dice-cursor/dice-cursor';
+
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, Navbar, Footer, CommonModule, DiceCursor],
   templateUrl: './app.html'
 })
 export class App implements OnInit{
-
-    constructor(private router: Router) {}
+  showHeaderFooter$!: Observable<boolean>;
+  
+  constructor(private router: Router, private layoutService: LayoutService) {}
 
 
   ngOnInit() {
+     this.showHeaderFooter$ = this.layoutService.showHeaderFooter$;
     this.router.events.subscribe((event: Event) => {
       if (event instanceof NavigationEnd) {
         setTimeout(() => {

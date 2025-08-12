@@ -30,8 +30,6 @@
             ],
             "scripts": [
               "node_modules/flyonui/flyonui.js"
-
-
             ]
           },
           "configurations": {

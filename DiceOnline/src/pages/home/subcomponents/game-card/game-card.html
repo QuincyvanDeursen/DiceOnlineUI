@@ -1,0 +1,26 @@
+<div
+  class="card sm:max-w-sm relative min-h-[33%] flex flex-col shadow-lg/60 shadow-blue-700 hover:scale-105 transform transition-all duration-300 hover:shadow-2xl hover:shadow-green-900"
+  [class.disabled]="disabled"
+>
+  <figure class="w-full h-48 overflow-hidden p-4">
+    <img [src]="imagePath" alt="{{title}}" class="w-full h-full object-contain" />
+  </figure>
+  <div class="card-body space-y-3 flex-grow">
+    <h5 class="card-title text-[#fc5a5a] text-shadow-lg/20 text-shadow-pink-700 ">{{ title }}</h5>
+    <p class="text-xl">{{ description }}</p>
+    <div class="card-actions">
+      <button
+        class="btn btn-accent text-white text-xl btn-wide"
+        [disabled]="disabled"
+      >
+        {{ buttonText }}
+      </button>
+    </div>
+  </div>
+
+  <!-- Grijs overlay als disabled -->
+  <div
+    *ngIf="disabled"
+    class="absolute inset-0 bg-gray-200 opacity-50 pointer-events-none rounded-lg"
+  ></div>
+</div>

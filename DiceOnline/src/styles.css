@@ -1,8 +1,82 @@
 @import "tailwindcss";
 @plugin "flyonui";
-@plugin "flyonui" {
-   themes: spotify;
-}
 @import "flyonui/variants.css";
 @source "../node_modules/flyonui/flyonui.js"; 
+@plugin "flyonui/theme" {
+  name: "playdice";
+  default: true;
+  prefersdark: false;
+  color-scheme: light;
 
+  --color-base-100: #ffffff;
+  --color-base-200: #ffffff;
+  --color-base-300: #ffffff;
+
+  --color-base-content: #02007A; /* zelfde als primary, donkerblauw voor tekst */
+
+  --color-primary: #02007A;
+  --color-primary-content: #fff;
+
+  --color-secondary: #2A6AF4;
+  --color-secondary-content: #fff;
+
+  --color-accent: #FFBB00;
+  --color-accent-content: #333;
+
+  --color-warning: #FF9500;
+  --color-warning-content: #fff;
+
+  --color-neutral: #F2F6FF;  /* licht neutraal blauw */
+  --color-neutral-content: #02007A;
+
+  --color-info: #4A1DFA;
+  --color-info-content: #fff;
+
+  --color-success: #00BD30;
+  --color-success-content: #fff;
+
+  --color-error: #FA270D;
+  --color-error-content: #fff;
+
+  --radius-selector: 1rem;
+  --radius-field: 0.5rem;
+  --radius-box: 0.8rem;
+
+  --size-selector: 0.3rem;
+  --size-field: 0.3rem;
+
+  --border: 2px;
+
+  --depth: 2;
+  --noise: 1;
+}
+
+@font-face {
+  font-family: "Super Frosting";
+  src: url("./assets/fonts/super_frosting/Super\ Frosting.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Dimbo Regular";
+  src: url("./assets/fonts/dimbo/Dimbo\ Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Super Frosting", sans-serif;
+    letter-spacing: 3px;
+}
+
+p, span, a, li, label, input, textarea, button {
+  font-family: "Dimbo Regular", sans-serif;
+  letter-spacing: 3px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  html, body, * {
+    cursor: none !important;
+  }
+}
