@@ -1,0 +1,27 @@
+<div 
+  class="relative flex items-center justify-center cursor-pointer transition-transform duration-200 w-full h-full"
+  [class.opacity-50]="locked"
+  [class.scale-90]="locked"
+  (click)="toggleLock()"
+>
+  <!-- Dobbelsteen -->
+  <ng-container *ngIf="type === 'd6'; else d8Template">
+    <div class="relative w-full h-full">
+      <app-d6-dice [value]="value" class="w-full h-full"></app-d6-dice>
+
+      <!-- Slotje rechts onderin, positioneren met % -->
+      <span 
+        [ngClass]="locked  
+          ? 'icon-[solar--lock-bold] text-error' 
+          : 'icon-[solar--lock-unlocked-bold] text-success'"
+        class="absolute bottom-[0%] right-[0%] w-[18%] h-[18%]"
+      ></span>
+    </div>
+  </ng-container>
+
+  <ng-template #d8Template>
+    <div class="relative w-full h-full">
+      <!-- <app-d8-dice [value]="value" class="w-full h-full"></app-d8-dice> -->
+    </div>
+  </ng-template>
+</div>

@@ -5,12 +5,12 @@ import { Footer } from '../shared/Components/footer/footer';
 import { Observable } from 'rxjs';
 import { LayoutService } from '../core/services/layout-service';
 import { CommonModule } from '@angular/common';
-import { DiceCursor } from '../shared/Components/dice-cursor/dice-cursor';
+
 
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Navbar, Footer, CommonModule, DiceCursor],
+  imports: [RouterOutlet, Navbar, Footer, CommonModule],
   templateUrl: './app.html'
 })
 export class App implements OnInit{

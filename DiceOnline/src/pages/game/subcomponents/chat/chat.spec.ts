@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DiceCursor } from './dice-cursor';
+import { Chat } from './chat';
 
-describe('DiceCursor', () => {
-  let component: DiceCursor;
-  let fixture: ComponentFixture<DiceCursor>;
+describe('Chat', () => {
+  let component: Chat;
+  let fixture: ComponentFixture<Chat>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DiceCursor]
+      imports: [Chat]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DiceCursor);
+    fixture = TestBed.createComponent(Chat);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

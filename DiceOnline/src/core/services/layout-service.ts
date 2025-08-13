@@ -9,8 +9,12 @@ export class LayoutService {
   private showHeaderFooterSubject = new BehaviorSubject<boolean>(true);
   showHeaderFooter$ = this.showHeaderFooterSubject.asObservable();
 
-  // Routes zonder header/footer
-  private noHeaderFooterRoutes: string[] = ['/sandbox'];
+  // Routes of patterns zonder header/footer
+  private noHeaderFooterPatterns: RegExp[] = [
+    /^\/sandbox$/,
+    /^$/,               // home
+    /^\/game(\/.*)?$/   // alles wat met /game begint
+  ];
 
   constructor(private router: Router) {
     this.router.events.subscribe((event) => {
@@ -21,14 +25,10 @@ export class LayoutService {
   }
 
   private updateHeaderFooterVisibility(url: string) {
-    if (this.isNoHeaderFooterPage(url)) {
-      this.showHeaderFooterSubject.next(false);
-    } else {
-      this.showHeaderFooterSubject.next(true);
-    }
+    this.showHeaderFooterSubject.next(!this.isNoHeaderFooterPage(url));
   }
 
   private isNoHeaderFooterPage(url: string): boolean {
-    return this.noHeaderFooterRoutes.includes(url);
+    return this.noHeaderFooterPatterns.some(pattern => pattern.test(url));
   }
 }
