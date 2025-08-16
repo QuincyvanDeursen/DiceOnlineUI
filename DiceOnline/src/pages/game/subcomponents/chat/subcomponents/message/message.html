@@ -1,0 +1,21 @@
+<ng-container *ngIf="system; else userMessage">
+    <ng-container *ngTemplateOutlet="systemMessage"></ng-container>
+</ng-container>
+
+<ng-template #systemMessage>
+    <div class="flex flex-row w-full h-full bg-accent/30 p-3 border-b-2 border-accent text-white   ">
+        <p>
+            <small class="px-2">{{ timestamp | date:'HH:mm' }}</small><strong class="text-accent/100">PlayDice: </strong> {{ content }}
+        </p>
+    </div>
+
+</ng-template>
+
+<ng-template #userMessage>
+
+        <div class="flex flex-row w-full h-full bg-primary/10 p-3 border-b-2 border-primary text-white" >
+            <p>
+                <small class="px-2">{{ timestamp | date:'HH:mm' }}</small><strong class="text-accent">{{ user }}: </strong> {{ content }}
+            </p>
+        </div>
+</ng-template>

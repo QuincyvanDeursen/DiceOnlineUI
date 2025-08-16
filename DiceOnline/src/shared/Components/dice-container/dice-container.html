@@ -7,7 +7,7 @@
   <!-- Dobbelsteen -->
   <ng-container *ngIf="type === 'd6'; else d8Template">
     <div class="relative w-full h-full">
-      <app-d6-dice [value]="value" class="w-full h-full"></app-d6-dice>
+      <app-d6-dice #dice [value]="value" class="w-full h-full"></app-d6-dice>
 
       <!-- Slotje rechts onderin, positioneren met % -->
       <span 
@@ -21,7 +21,7 @@
 
   <ng-template #d8Template>
     <div class="relative w-full h-full">
-      <!-- <app-d8-dice [value]="value" class="w-full h-full"></app-d8-dice> -->
+      <!-- <app-d8-dice #dice [value]="value" class="w-full h-full"></app-d8-dice> -->
     </div>
   </ng-template>
 </div>

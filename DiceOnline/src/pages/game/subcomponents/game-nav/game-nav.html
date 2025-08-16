@@ -1,4 +1,4 @@
-<div class="flex flex-col h-full w-full border-t-6 border-secondary bg-secondary">
+<div class="flex flex-col h-full w-full bg-secondary border-8 ">
 
   <!-- Chat (60% van hoogte) -->
   <div class="flex-[0_0_70%] overflow-y-auto">
@@ -6,9 +6,25 @@
   </div>
 
   <!-- Buttons (40% van hoogte) -->
-  <div class="flex flex-[0_0_30%] gap-2 p-2 ">
-    <button class="flex-1 px-4 py-2 bg-accent text-white rounded-2xl hover:bg-blue-600 text-4xl btn h-full hover:bg-green-700" (click)="reset()">Unlock All</button>
-    <button class="flex-1 px-4 py-2 bg-primary text-white rounded-2xl hover:bg-green-600 text-4xl btn h-full hover:bg-green-700" (click)="rollDices()">Roll!</button>
-  </div>
+<div class="flex flex-[0_0_30%] gap-2 p-2">
+  <div class="flex-row flex w-full ">
+    <button [ngClass]="{ 'opacity-50 cursor-not-allowed': disableButton }" [disabled]="disableButton"
+            class="flex-1 flex flex-col px-4 py-2 bg-accent text-white rounded-2xl hover:bg-green-600 text-4xl btn h-full hover:bg-green-700"
+            (click)="rollDices()">
+      
+      <!-- Roll tekst altijd gecentreerd -->
+      <span class="flex-1 flex items-center justify-center">Roll!</span>
 
+      <!-- Progressbar wrapper, altijd aanwezig maar klein -->
+      <div class="h-4 my-2 w-full flex items-center justify-center">
+        <div *ngIf="disableButton" class="flex flex-row items-center w-full">
+          <span class="icon-[solar--clock-circle-bold-duotone] text-black/50 mr-2"></span>
+          <div class="progress h-2 w-full flex flex-col border border-gray-300">
+            <div class="h-full bg-green-500" [style.width.%]="progress"></div>
+          </div>
+        </div>
+      </div>
+
+    </button>
+  </div>
 </div>

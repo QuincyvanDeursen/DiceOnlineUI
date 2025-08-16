@@ -1,3 +1,13 @@
-<app-d6-dice [value]="1" bgColor="white" pipColor="black"></app-d6-dice>
-<app-d6-dice [value]="4" bgColor="blue" pipColor="white"></app-d6-dice>
-<app-d6-dice [value]="6" bgColor="#fdd835" pipColor="red"></app-d6-dice>
+
+<div class="flex-row flex max-h-[50%]">
+<app-d6-dice #dice1 [value]="0" bgColor="white" pipColor="black"></app-d6-dice>
+<app-d6-dice #dice2 [value]="4" bgColor="blue" pipColor="white"></app-d6-dice>
+<app-d6-dice #dice3 [value]="6" bgColor="#fdd835" pipColor="red"></app-d6-dice>
+</div>
+
+<div class="flex-col flex max-h-[50%] w-1/2">
+  <app-message [user]="'User1'" [content]="'Hello!'" [system]="false" [timestamp]="date"></app-message>
+  <app-message [user]="'System'" [content]="'Welcome to PlayDice!'" [system]="true" [timestamp]="date"></app-message>
+  <app-message [user]="'User1'" [content]="'How are you?'" [system]="false" [timestamp]="date"></app-message>
+  <app-message [user]="'System'" [content]="'I am just a bot, but thanks for asking!'" [system]="true" [timestamp]="date"></app-message>
+</div>

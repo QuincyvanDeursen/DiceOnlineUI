@@ -46,14 +46,14 @@
         d="M102,67.1c-9.6-6.1-22-3.1-29.5,2-15.4,10.7-19.6,37.5-7.6,47.8s35.9,3.9,44.5-12.5C115.5,92.6,113.9,74.6,102,67.1Z" />
     </svg>
     <div class="grid grid-cols-2 lg:grid-cols-3 gap-2 w-full h-full auto-rows-fr p-2">
-      <app-dice-container *ngFor="let dice of dices" [type]="dice.type" [value]="dice.value" [locked]="dice.locked"
+      <app-dice-container #container *ngFor="let dice of dices" [type]="dice.type" [value]="dice.value" [locked]="dice.locked" [diceId]="dice.id"
         (lockedChangeEvent)="onDiceToggle(dice.id)" class="w-full h-full max-h-full"></app-dice-container>
     </div>
   </div>
 
   <!-- Onderste container: 55% -->
   <div class="h-[55%] w-full lg:max-w-5xl lg:mx-auto ">
-    <app-game-nav (resetEvent)="resetDice()"></app-game-nav>
+    <app-game-nav  (rollEvent)="rollDices()"></app-game-nav>
   </div>
 
 </div>

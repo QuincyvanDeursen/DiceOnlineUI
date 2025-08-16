@@ -1,45 +1,69 @@
 <div class="min-h-screen relative overflow-hidden">
 
-<svg 
-        class="absolute inset-0 w-full h-full -z-10" 
-        preserveAspectRatio="xMidYMid slice" 
-        viewBox="0 0 120 120"
-    >
-        <defs>
-            <style>
-                @keyframes rotate {
-                    0% { transform: rotate(0deg); }
-                    100% { transform: rotate(360deg); }
-                }
-                .out-top { animation: rotate 20s linear infinite; transform-origin: 13px 25px; }
-                .in-top { animation: rotate 10s linear infinite; transform-origin: 13px 25px; }
-                .out-bottom { animation: rotate 25s linear infinite; transform-origin: 84px 93px; }
-                .in-bottom { animation: rotate 15s linear infinite; transform-origin: 84px 93px; }
-            </style>
-        </defs>
-        <path fill="#2A6AF4" class="out-top" d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z"/>
-        <path fill="#7da4f2" class="in-top" d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z"/>
-        <path fill="#2A6AF4" class="out-bottom" d="M105.9,48.6c-12.4-8.2-29.3-4.8-39.4.8-23.4,12.8-37.7,51.9-19.1,74.1s63.9,15.3,76-5.6c7.6-13.3,1.8-31.1-2.3-43.8C117.6,63.3,114.7,54.3,105.9,48.6Z"/>
-        <path fill="#7da4f2" class="in-bottom" d="M102,67.1c-9.6-6.1-22-3.1-29.5,2-15.4,10.7-19.6,37.5-7.6,47.8s35.9,3.9,44.5-12.5C115.5,92.6,113.9,74.6,102,67.1Z"/>
-    </svg>
+  <svg class="absolute inset-0 w-full h-full -z-10" preserveAspectRatio="xMidYMid slice" viewBox="0 0 120 120">
+    <defs>
+      <style>
+        @keyframes rotate {
+          0% {
+            transform: rotate(0deg);
+          }
+
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+        .out-top {
+          animation: rotate 20s linear infinite;
+          transform-origin: 13px 25px;
+        }
+
+        .in-top {
+          animation: rotate 10s linear infinite;
+          transform-origin: 13px 25px;
+        }
+
+        .out-bottom {
+          animation: rotate 25s linear infinite;
+          transform-origin: 84px 93px;
+        }
+
+        .in-bottom {
+          animation: rotate 15s linear infinite;
+          transform-origin: 84px 93px;
+        }
+      </style>
+    </defs>
+    <path fill="#2A6AF4" class="out-top"
+      d="M37-5C25.1-14.7,5.7-19.1-9.2-10-28.5,1.8-32.7,31.1-19.8,49c15.5,21.5,52.6,22,67.2,2.3C59.4,35,53.7,8.5,37-5Z" />
+    <path fill="#7da4f2" class="in-top"
+      d="M20.6,4.1C11.6,1.5-1.9,2.5-8,11.2-16.3,23.1-8.2,45.6,7.4,50S42.1,38.9,41,24.5C40.2,14.1,29.4,6.6,20.6,4.1Z" />
+    <path fill="#2A6AF4" class="out-bottom"
+      d="M105.9,48.6c-12.4-8.2-29.3-4.8-39.4.8-23.4,12.8-37.7,51.9-19.1,74.1s63.9,15.3,76-5.6c7.6-13.3,1.8-31.1-2.3-43.8C117.6,63.3,114.7,54.3,105.9,48.6Z" />
+    <path fill="#7da4f2" class="in-bottom"
+      d="M102,67.1c-9.6-6.1-22-3.1-29.5,2-15.4,10.7-19.6,37.5-7.6,47.8s35.9,3.9,44.5-12.5C115.5,92.6,113.9,74.6,102,67.1Z" />
+  </svg>
 
 
 
-    <!-- header -->
-    <div class="flex flex-col lg:flex-row mx-auto max-w-7xl  py-8  z-10">
-        <h1 class="text-5xl  mx-auto text-accent my-8 lg:hidden  text-center text-shadow-lg text-shadow-orange-500 z-10">Welcome to PlayDice!</h1>
-        <div class="flex flex-col mx-auto lg:w-1/2 justify-center lg:me-16"><app-jumbotron-svg></app-jumbotron-svg>
-        </div>
-        <div class="flex flex-col mx-4 ">
-            <h1 class="text-5xl  text-accent  mx-auto  hidden lg:block lg text-8xl mb-4 text-shadow-lg text-shadow-orange-500 ">Welcome to PlayDice!</h1>
-            <p class="text-2xl text-justify text-primary font-bold my-8">
-                Play dice online with friends. Whether you are at home, on the road or at a café, everyone sees the
-                rolls live on their own device. Perfect when physical dice are not an option. Create a lobby, invite
-                your friends, and start rolling together in real time. No downloads or accounts required. Just share the
-                lobby code and play instantly from any device.
-            </p>
+  <!-- header -->
+  <div class="flex flex-col lg:flex-row mx-auto max-w-7xl  py-8  z-10">
+    <h1 class="text-5xl  mx-auto text-accent my-8 lg:hidden  text-center text-shadow-lg text-shadow-orange-500 z-10">
+      Welcome to PlayDice!</h1>
+    <div class="flex flex-col mx-auto lg:w-1/2 justify-center lg:me-16"><app-jumbotron-svg></app-jumbotron-svg>
+    </div>
+    <div class="flex flex-col mx-4 ">
+      <h1
+        class="text-5xl  text-accent  mx-auto  hidden lg:block lg text-8xl mb-4 text-shadow-lg text-shadow-orange-500 ">
+        Welcome to PlayDice!</h1>
+      <p class="text-2xl text-justify text-primary font-bold my-8">
+        Play dice online with friends. Whether you are at home, on the road or at a café, everyone sees the
+        rolls live on their own device. Perfect when physical dice are not an option. Create a lobby, invite
+        your friends, and start rolling together in real time. No downloads or accounts required. Just share the
+        lobby code and play instantly from any device.
+      </p>
 
-            <!-- 
+      <!-- 
             <div class="flex flex-col lg:flex-row mt-8 items-center justify-center gap-4">
 
                 <button
@@ -50,53 +74,40 @@
                     routerLink="/about">Join a
                     Lobby</button>
             </div> -->
+    </div>
+  </div>
+  <div class="divider divider-vertical max-w-7xl mx-auto divider-success"></div>
+
+  <div class="mx-4">
+    <div class="flex flex-col lg:flex-row gap-8 justify-center max-w-7xl mx-auto my-8">
+      <div class="flex flex-col items-center justify-center lg:w-1/4">
+        <h2 class="text-4xl  text-accent mb-4 underline-primary text-shadow-lg text-shadow-orange-500 ">Join a Game</h2>
+        <app-game-card imagePath="together.svg" title="Join Lobby"
+          description="Join your friends' existing game lobby quickly and easily." modalId="join-modal"
+          buttonText="Join"> </app-game-card>
+        <app-join-modal [loading]="loading" [errorMessage]="errorMessage" (lobbyJoined)="onJoinSubmitted($event)"></app-join-modal>
+      </div>
+
+      <div class="divider divider-horizontal divider-success"></div>
+
+      <div class="flex flex-col items-center justify-center lg:w-3/4">
+        <h2 class="text-4xl  text-accent mb-4 text-shadow-lg text-shadow-orange-500 ">Host a Game</h2>
+        <div class="flex flex-col lg:flex-row gap-4">
+          <app-game-card imagePath="custom.svg" title="Open Play"
+            description="Start a new lobby and roll dice freely with no predefined rules." buttonText="Play"
+            modalId="host-modal"></app-game-card>
+          <app-host-modal [loading]="loading" [errorMessage]="errorMessage" (hostCreated)="onHostCreated($event)">
+          </app-host-modal>
+
+          <app-game-card imagePath="qwixx.svg" title="Qwixx"
+            description="Start a new Qwixx lobby and play the classic game." buttonText="Comming soon"
+            [disabled]="true"></app-game-card>
+
+          <app-game-card imagePath="yahtzee.svg" title="Yahtzee"
+            description="Start a new Yahtzee lobby and enjoy the classic gameplay." buttonText="Comming soon"
+            [disabled]="true"></app-game-card>
         </div>
-    </div>
-            <div class="divider divider-vertical max-w-7xl mx-auto divider-success"></div>
-
-<div class="mx-4">
-  <div class="flex flex-col lg:flex-row gap-8 justify-center max-w-7xl mx-auto my-8">
-    <div class="flex flex-col items-center justify-center lg:w-1/4">
-      <h2 class="text-4xl  text-accent mb-4 underline-primary text-shadow-lg text-shadow-orange-500 ">Join a Game</h2>
-      <app-game-card
-        imagePath="together.svg"
-        title="Join Lobby"
-        description="Join your friends' existing game lobby quickly and easily."
-        buttonText="Join"
-      ></app-game-card>
-    </div>
-
-    <div class="divider divider-horizontal divider-success"></div>
-
-    <div class="flex flex-col items-center justify-center lg:w-3/4">
-      <h2 class="text-4xl  text-accent mb-4 text-shadow-lg text-shadow-orange-500 ">Host a Game</h2>
-      <div class="flex flex-col lg:flex-row gap-4">
-        <app-game-card
-          imagePath="custom.svg"
-          title="Open Play"
-          description="Start a new lobby and roll dice freely with no predefined rules."
-          buttonText="Play"
-        ></app-game-card>
-
-        <app-game-card
-          imagePath="qwixx.svg"
-          title="Qwixx"
-          description="Start a new Qwixx lobby and play the classic game."
-          buttonText="Comming soon"
-          [disabled]="true"
-        ></app-game-card>
-
-        <app-game-card
-          imagePath="yahtzee.svg"
-          title="Yahtzee"
-          description="Start a new Yahtzee lobby and enjoy the classic gameplay."
-          buttonText="Comming soon"
-          [disabled]="true"
-
-        ></app-game-card>
       </div>
     </div>
   </div>
-</div>
-
 </div>

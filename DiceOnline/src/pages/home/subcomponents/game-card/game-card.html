@@ -12,6 +12,11 @@
       <button
         class="btn btn-accent text-white text-xl btn-wide"
         [disabled]="disabled"
+        (click)="onClick()"
+         [attr.data-overlay]="'#' + modalId"
+          aria-haspopup="dialog"
+          aria-expanded="false"
+          [attr.aria-controls]="modalId"
       >
         {{ buttonText }}
       </button>

@@ -2,7 +2,7 @@
   <div class="w-full md:flex md:items-center md:gap-2">
     <div class="flex items-center justify-between">
       <div class="navbar-start items-center justify-between max-md:w-full">
-        <a class="link text-base-content link-neutral text-xl font-bold no-underline text-white hover:text-primary" href="#">Play<span class="text-accent">Dice</span></a>
+        <a class="link text-base-content link-neutral text-xl font-bold no-underline text-white hover:text-primary" [routerLink]="['/home']">Play<span class="text-accent">Dice</span></a>
         <div class="md:hidden">
           <button type="button" class="collapse-toggle btn btn-outline btn-secondary btn-sm btn-square" data-collapse="#default-navbar-collapse" aria-controls="default-navbar-collapse" aria-label="Toggle navigation" >
             <span class="icon-[tabler--menu-2] collapse-open:hidden size-4"></span>
@@ -13,9 +13,9 @@
     </div>
     <div id="default-navbar-collapse" class="md:navbar-end collapse hidden grow basis-full overflow-hidden transition-[height] duration-300 max-md:w-full" >
       <ul class="menu md:menu-horizontal gap-2 p-0  max-md:mt-2">
-        <li><a class="text-white hover:text-accent" href="#">Home</a></li>
-        <li><a class="text-white hover:text-accent" href="#">Host</a></li>
-        <li><a class="text-white hover:text-accent" href="#">Join</a></li>
+        <li><a class="text-white hover:text-accent" [routerLink]="['/home']">Home</a></li>
+        <li><a class="text-white hover:text-accent" [routerLink]="['/host']">Host</a></li>
+        <li><a class="text-white hover:text-accent" [routerLink]="['/join']">Join</a></li>
       </ul>
     </div>
   </div>

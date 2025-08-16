@@ -11,7 +11,6 @@ export class LayoutService {
 
   // Routes of patterns zonder header/footer
   private noHeaderFooterPatterns: RegExp[] = [
-    /^\/sandbox$/,
     /^$/,               // home
     /^\/game(\/.*)?$/   // alles wat met /game begint
   ];

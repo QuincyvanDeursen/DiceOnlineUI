@@ -1,0 +1,62 @@
+<div id="host-modal"
+  class="overlay modal overlay-open:opacity-100 overlay-open:duration-300 modal-middle hidden bg-primary/80 [--overlay-backdrop:false] [--body-scroll:true]"
+  role="dialog" tabindex="-1">
+
+  <div class="modal-dialog border-4 border-accent rounded-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Host a lobby</h3>
+        <button type="button" class="btn btn-text btn-circle btn-sm absolute end-3 top-3" aria-label="Close"
+          data-overlay="#host-modal">
+          <span class="icon-[tabler--x] size-4"></span>
+        </button>
+      </div>
+
+      <form #hostForm="ngForm" (ngSubmit)="submitForm(hostForm)">
+        <div class="modal-body pt-0">
+          <div class="mb-4">
+            <label class="label-text text-lg" for="name">Username</label>
+            <input type="text" id="name" name="name" [(ngModel)]="name" #nameInput="ngModel" required
+              pattern="^[A-Za-z]{2,20}$" placeholder="Your Name" class="input placeholder-gray-400" />
+
+            <div *ngIf="nameInput.invalid && nameInput.touched" class="text-red-500 text-sm mt-1">
+              <div *ngIf="nameInput.errors?.['required']">Name is required</div>
+              <div *ngIf="nameInput.errors?.['pattern']">
+                Name must be 2-20 letters, no spaces, numbers, or special chars.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="label-text text-lg" for="dice">How many Dices do you need?</label>
+            <select class="input" id="dice" [(ngModel)]="diceCount" name="dice">
+              <option *ngFor="let d of diceOptions" [value]="d">{{ d }}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-soft btn-secondary" data-overlay="#host-modal">Close</button>
+
+          <button type="submit" class="btn btn-primary" [disabled]="hostForm.invalid || loading">
+            Start Lobby
+          </button>
+        </div>
+
+        <!-- Loading indicator and error message section -->
+
+        <div *ngIf="loading" class="modal-footer">
+          <span class="loading loading-dots loading-xl mx-auto"></span> <!-- Toon de loading indicator -->
+        </div>
+
+        <div *ngIf="errorMessage" class="flex items-center justify-center modal-footer text-red-500">
+          <span>
+            {{ errorMessage }}
+          </span>
+        </div>
+
+
+      </form>
+    </div>
+  </div>
+</div>

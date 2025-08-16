@@ -1,0 +1,64 @@
+<div id="join-modal"
+  class="overlay modal overlay-open:opacity-100 overlay-open:duration-300 modal-middle hidden bg-primary/80 [--overlay-backdrop:false] [--body-scroll:true]"
+  role="dialog" tabindex="-1">
+
+  <div class="modal-dialog border-4 border-accent rounded-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title">Join a Lobby</h3>
+        <button type="button" class="btn btn-text btn-circle btn-sm absolute end-3 top-3" aria-label="Close"
+          data-overlay="#join-modal">
+          <span class="icon-[tabler--x] size-4"></span>
+        </button>
+      </div>
+
+      <form #joinForm="ngForm" (ngSubmit)="submitForm(joinForm)">
+        <div class="modal-body pt-0">
+          <div class="mb-4">
+            <label class="label-text text-lg" for="name">Username</label>
+            <input type="text" id="name" name="name" [(ngModel)]="name" #nameInput="ngModel" required
+              pattern="^[A-Za-z]{2,20}$" placeholder="JohnDoe" class="input placeholder-gray-400" />
+
+            <div *ngIf="nameInput.invalid && nameInput.touched" class="text-red-500 text-sm mt-1">
+              <div *ngIf="nameInput.errors?.['required']">Name is required</div>
+              <div *ngIf="nameInput.errors?.['pattern']">
+                Name must be 2-20 letters, no spaces, numbers, or special chars.
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <label class="label-text text-lg" for="lobbyCode">Lobby Code</label>
+            <input type="text" id="lobbyCode" name="lobbyCode" [(ngModel)]="lobbyCode" #lobbyCodeInput="ngModel"
+              required pattern="^[A-Za-z0-9]{4,6}$" placeholder="1234" class="input placeholder-gray-400" />
+
+            <div *ngIf="lobbyCodeInput.invalid && lobbyCodeInput.touched" class="text-red-500 text-sm mt-1">
+              <div *ngIf="lobbyCodeInput.errors?.['required']">Lobby Code is required</div>
+              <div *ngIf="lobbyCodeInput.errors?.['pattern']">
+                Lobby Code must be 4-6 alphanumeric characters.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-soft btn-secondary" data-overlay="#join-modal">Close</button>
+
+          <button type="submit" class="btn btn-primary" [disabled]="joinForm.invalid || loading">
+            Join Lobby
+          </button>
+        </div>
+
+        <div *ngIf="loading" class="modal-footer">
+          <span class="loading loading-dots loading-xl mx-auto"></span> <!-- Toon de loading indicator -->
+        </div>
+
+        <div *ngIf="errorMessage" class="flex items-center justify-center modal-footer text-red-500">
+          <span>
+            {{ errorMessage }}
+          </span>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
