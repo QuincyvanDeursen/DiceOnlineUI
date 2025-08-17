@@ -30,12 +30,12 @@
           <div class="mb-4">
             <label class="label-text text-lg" for="lobbyCode">Lobby Code</label>
             <input type="text" id="lobbyCode" name="lobbyCode" [(ngModel)]="lobbyCode" #lobbyCodeInput="ngModel"
-              required pattern="^[A-Za-z0-9]{4,6}$" placeholder="1234" class="input placeholder-gray-400" />
+              required pattern="^[A-Za-z0-9]{6}$" placeholder="1234" class="input placeholder-gray-400" />
 
             <div *ngIf="lobbyCodeInput.invalid && lobbyCodeInput.touched" class="text-red-500 text-sm mt-1">
               <div *ngIf="lobbyCodeInput.errors?.['required']">Lobby Code is required</div>
               <div *ngIf="lobbyCodeInput.errors?.['pattern']">
-                Lobby Code must be 4-6 alphanumeric characters.
+                Lobby Code must be 6 alphanumeric characters.
               </div>
             </div>
           </div>
