@@ -7,7 +7,7 @@ import { CreateLobbyCommand } from '../dtos/CreateLobbyCommand';
 import { SendMessageCommand } from '../dtos/SendMessageCommand';
 import { LeaveLobbyCommand } from '../dtos/LeaveLobbyCommand';
 import { RollDiceCommand } from '../dtos/RollDiceCommand';
-import { environment } from '../../environment';
+import { environment } from '../../environments/environment';
 
 
 

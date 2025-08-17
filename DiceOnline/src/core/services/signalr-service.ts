@@ -4,7 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { PlayerJoinedEvent } from '../events/playerJoinedEvent';
 import { PlayerLeftEvent } from '../events/PlayerLeftEvent';
 import { DiceRolledEvent } from '../events/diceRolledEvent';
-import { environment } from '../../environment';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
