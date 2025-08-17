@@ -3,6 +3,8 @@ import * as signalR from '@microsoft/signalr';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PlayerJoinedEvent } from '../events/playerJoinedEvent';
 import { PlayerLeftEvent } from '../events/PlayerLeftEvent';
+import { DiceRolledEvent } from '../events/diceRolledEvent';
+import { environment } from '../../environment';
 
 @Injectable({ providedIn: 'root' })
 export class SignalRService {
@@ -21,6 +23,9 @@ export class SignalRService {
 
   private messageSentSubject = new BehaviorSubject<{ message: string; playerName: string } | null>(null);
   messageSent$: Observable<{ message: string; playerName: string } | null> = this.messageSentSubject.asObservable();
+
+  private diceRolledSubject = new BehaviorSubject<DiceRolledEvent | null>(null);
+  diceRolled$: Observable<{ playerName: string; results: { index: number; value: number }[] } | null> = this.diceRolledSubject.asObservable();
   //#endregion
 
   private eventsRegistered = false;
@@ -28,7 +33,7 @@ export class SignalRService {
   async startConnection(): Promise<void> {
     if (!this.hubConnection) {
       this.hubConnection = new signalR.HubConnectionBuilder()
-        .withUrl('https://localhost:7203/gamehub')
+        .withUrl(`${environment.apiUrl}/gamehub`)
         .withAutomaticReconnect()
         .build();
     }
@@ -72,6 +77,7 @@ export class SignalRService {
     this.hubConnection.off('PlayerJoined');
     this.hubConnection.off('MessageSent');
     this.hubConnection.off('PlayerLeft');
+    this.hubConnection.off('diceRolled');
 
     this.hubConnection.on('PlayerJoined', (playerName: string) => {
       this.playerJoinedSubject.next({ playerName });
@@ -85,6 +91,11 @@ export class SignalRService {
     this.hubConnection.on('PlayerLeft', (playerName: string) => {
       console.log('Player left:', playerName);
       this.playerLeftSubject.next({ playerName });
+    });
+
+    this.hubConnection.on('DiceRolled', (data: { playerName: string; results: { index: number; value: number }[] }) => {
+      console.log('Dice rolled:', data.playerName, data.results);
+      this.diceRolledSubject.next({ playerName: data.playerName, results: data.results });
     });
   }
 

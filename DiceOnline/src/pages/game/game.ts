@@ -8,6 +8,7 @@ import { LobbyService } from '../../core/services/lobby-service';
 import { Lobby } from '../../core/models/lobby';
 import { LeaveLobbyCommand } from '../../core/dtos/LeaveLobbyCommand';
 import { Subject, takeUntil } from 'rxjs';
+import { RollDiceCommand } from '../../core/dtos/RollDiceCommand';
 
 @Component({
   selector: 'app-game',
@@ -34,13 +35,13 @@ export class Game {
     this.getLobbyByCode();
     this.startListeningToPlayerJoined();
     this.startListeningToPlayerLeft();
+    this.startListeningToDiceRolled();
     console.log('Game component initialized');
     console.log('dices:', this.dices);
   }
 
   
   ngOnDestroy() {
-
     this.destroy$.next();
     this.destroy$.complete();
     this.leaveLobby();
@@ -107,6 +108,23 @@ export class Game {
       });
   }
 
+  private startListeningToDiceRolled() {
+    this.signalRService.diceRolled$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(event => {
+        if (event) {
+          console.log('Dice rolled event received:', event);
+          event.results.forEach(dice => {
+            const container = this.diceContainers.find(c => c.diceId === dice.index);
+            console.log('Rolling dice with index:', dice.index, 'and value:', dice.value);
+            if (container) {
+              container.roll(dice.value);
+            }
+          });
+        }
+      });
+  }
+
   //#region game actions
 
   leaveLobby() {
@@ -138,16 +156,26 @@ export class Game {
   }
 
   rollDices() {
-    this.dices.forEach(dice => {
+    const command: RollDiceCommand = {
+      lobbyCode: this.lobby?.lobbyCode || '',
+      playerName: localStorage.getItem('playerName') || 'unknown',
+      dices: this.dices
+        .filter(d => !d.locked)
+        .map((d) => ({
+          index: d.id,
+          minValue: this.lobby?.diceSettings.minValue ?? 1,
+          maxValue: this.lobby?.diceSettings.maxValue ?? 6
+        }))
+    };
 
-      if (!dice.locked) {
-        const newValue = Math.floor(Math.random() * 6) + 1;
-        const container = this.diceContainers.find(c => c.diceId === dice.id);
-        container?.roll(newValue);
+    this.lobbyService.rollDice(command).subscribe({
+      next: () => {
+        console.log('Dice rolled successfully');
+      },
+      error: err => {
+        console.error('Error rolling dice:', err);
       }
     });
-
-    this.unlockAllDices();
   }
 
   unlockAllDices() {

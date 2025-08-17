@@ -31,6 +31,8 @@ export class Chat {
     this.addFirstMessage();
     this.startListeningToPlayerJoined();
     this.startListeningToMessageSent();
+    this.startListeningToPlayerLeft();
+    this.startListeningToDiceRolled();
   }
 
   ngOnDestroy() {
@@ -122,6 +124,29 @@ export class Chat {
             timestamp: new Date(),
             system: false
           });
+        }
+      });
+  }
+
+  startListeningToDiceRolled() {
+    this.signalR.diceRolled$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(event => {
+        if (event) {
+            const diceResults = event.results
+              .map(dice => `🎲[${toRoman(dice.index)}, ${dice.value}]`)
+              .join(', ');
+            this.chats.push({
+              user: event.playerName,
+              content: `Player ${event.playerName} rolled: ${diceResults}.`,
+              timestamp: new Date(),
+              system: true
+            });
+
+            function toRoman(num: number): string {
+              const romanNumerals = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X'];
+              return romanNumerals[num - 1];
+            }
         }
       });
   }

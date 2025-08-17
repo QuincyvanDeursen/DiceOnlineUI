@@ -6,6 +6,8 @@ import { JoinLobbyCommand } from '../dtos/JoinLobbyCommand';
 import { CreateLobbyCommand } from '../dtos/CreateLobbyCommand';
 import { SendMessageCommand } from '../dtos/SendMessageCommand';
 import { LeaveLobbyCommand } from '../dtos/LeaveLobbyCommand';
+import { RollDiceCommand } from '../dtos/RollDiceCommand';
+import { environment } from '../../environment';
 
 
 
@@ -13,7 +15,7 @@ import { LeaveLobbyCommand } from '../dtos/LeaveLobbyCommand';
   providedIn: 'root'
 })
 export class LobbyService {
-  private apiBaseUrl = 'https://localhost:7203/lobbies';
+  private apiBaseUrl = `${environment.apiUrl}/lobbies`;
 
   constructor(private http: HttpClient) {}
 
@@ -56,6 +58,15 @@ export class LobbyService {
   sendMessage(command: SendMessageCommand): Observable<any> {
     console.log('Sending message:', command);
     return this.http.post(`${this.apiBaseUrl}/message`, command).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('API fout:', error);
+        return throwError(() => error); // stuurt error naar subscriber
+      })
+    );
+  }
+
+  rollDice(command: RollDiceCommand): Observable<any> {
+    return this.http.post(`${this.apiBaseUrl}/roll`, command).pipe(
       catchError((error: HttpErrorResponse) => {
         console.error('API fout:', error);
         return throwError(() => error); // stuurt error naar subscriber
