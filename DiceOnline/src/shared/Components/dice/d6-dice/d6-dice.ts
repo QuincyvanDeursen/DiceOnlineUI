@@ -16,22 +16,31 @@ export class D6Dice implements DiceInterface {
 
 isShaking = false;
 isFlipping = false;
-
-  rollDiceAnimationWithValue(newValue: number) {
-    if (this.isShaking || this.isFlipping) return;
-
-    this.isShaking = true;
-    setTimeout(() => {
-      this.isShaking = false;
-
-      this.isFlipping = true;
-      setTimeout(() => {
-        this.value = newValue; // nieuwe waarde halverwege flip
-      }, 300);
-
-      setTimeout(() => {
-        this.isFlipping = false;
-      }, 600);
-    }, 400);
+private nextValue: number | null = null;
+rollDiceAnimationWithValue(newValue: number) {
+  if (this.isShaking || this.isFlipping) {
+    this.nextValue = newValue; // remember last
+    return;
   }
+
+  this.isShaking = true;
+  setTimeout(() => {
+    this.isShaking = false;
+    this.isFlipping = true;
+
+    setTimeout(() => {
+      this.value = newValue;
+    }, 300);
+
+    setTimeout(() => {
+      this.isFlipping = false;
+
+      if (this.nextValue !== null) {
+        const val = this.nextValue;
+        this.nextValue = null;
+        this.rollDiceAnimationWithValue(val); // run queued one
+      }
+    }, 600);
+  }, 400);
+}
 }

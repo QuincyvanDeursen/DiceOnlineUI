@@ -134,7 +134,7 @@ export class Chat {
       .subscribe(event => {
         if (event) {
             const diceResults = event.results
-              .map(dice => `🎲[${toRoman(dice.index)}, ${dice.value}]`)
+              .map(dice => `🎲[${toRoman(dice.index + 1)}, ${dice.value}]`)
               .join(', ');
             this.chats.push({
               user: event.playerName,
