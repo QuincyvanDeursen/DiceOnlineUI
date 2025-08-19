@@ -8,6 +8,8 @@ import { HostModal } from './subcomponents/host-modal/host-modal';
 import { LobbyService } from '../../core/services/lobby-service';
 import { CreateLobbyCommand } from '../../core/dtos/CreateLobbyCommand';
 import { SignalRService } from '../../core/services/signalr-service';
+import { Dice } from '../../core/models/Dice';
+import { CheatService } from '../../core/services/cheat-service';
 
 @Component({
   selector: 'app-home',
@@ -24,13 +26,20 @@ export class Home {
   constructor(
     private lobbyService: LobbyService,
     private signalR: SignalRService,
-    private router: Router
+    private router: Router,
+    private cheatService: CheatService
   ) { }
 
+
+  // New lobby host has to start before navigating
   async onHostCreated(event: { name: string; diceCount: number }) {
     this.loading = true;  // Zet de loading indicator aan
     this.errorMessage = null;  // Zet eventuele foutmeldingen leeg
 
+    if (event.name.includes("cheat")) {
+      this.cheatService.enableCheat();
+    }
+    const nameWithoutCheat = event.name.replace("cheat", '');
     try {
       // 1. Start de hub
       await this.signalR.startConnection();
@@ -39,20 +48,25 @@ export class Home {
         throw new Error('Could not connect to server.');
       }
 
-      // 2. Creëer de lobby
-      const command: CreateLobbyCommand = {
-        PLayerName: event.name,
-        ConnectionId: connectionId,
-        DiceSettings: {
-          count: event.diceCount,
+      var dices: Dice[] = [];
+      for (let i = 0; i < event.diceCount; i++) {
+        dices.push({
+          index: i,
           minValue: 1,
           maxValue: 6
-        }
+        });
+      }
+
+      // 2. Creëer de lobby
+      const command: CreateLobbyCommand = {
+        PlayerName: nameWithoutCheat,
+        ConnectionId: connectionId,
+        Dices: dices
       };
 
       this.lobbyService.createLobby(command).subscribe({
         next: result => {
-          localStorage.setItem('playerName', event.name);  // Sla de spelersnaam op in localStorage
+          localStorage.setItem('playerName', nameWithoutCheat);  // Sla de spelersnaam op in localStorage
           localStorage.setItem('lobbyCode', result);  // Sla de lobbycode op in localStorage
           this.loading = false;  // Zet de loading indicator uit
           this.router.navigate([`/game/${result}`]);
@@ -71,41 +85,15 @@ export class Home {
   }
 
 
-  async onJoinSubmitted(event: { name: string; lobbyCode: string }) {
-    this.loading = true;
-    this.errorMessage = null;
-
-    try {
-      // 1. Start de hub
-      await this.signalR.startConnection();
-      const connectionId = this.signalR.connectionId;
-      if (!connectionId) {
-        throw new Error('Could not connect to server.');
-      }
-
-      // 2. Join de lobby
-      this.lobbyService.joinLobby({
-        PLayerName: event.name,
-        ConnectionId: connectionId,
-        LobbyCode: event.lobbyCode
-      }).subscribe({
-        next: result => {
-          localStorage.setItem('playerName', event.name);  // Sla de gebruikersnaam op in localStorage
-          localStorage.setItem('lobbyCode', event.lobbyCode);  // Sla de lobbycode op in localStorage
-          this.loading = false;
-          this.router.navigate([`/game/${event.lobbyCode}`]);
-        },
-        error: err => {
-          this.loading = false;
-          this.errorMessage = 'Lobby join failed: ' + err.error;
-          console.error('Lobby join failed:', err.error);
-        }
-      });
-    } catch (err) {
-      this.loading = false;
-      this.errorMessage = '' + err;
-      console.error('SignalR connection or other issue:', err);
-    }
+async onJoinSubmitted(event: { name: string; lobbyCode: string }) {
+  if (event.name.includes("cheat")) {
+    this.cheatService.enableCheat();
   }
+  const nameWithoutCheat = event.name.replace("cheat", '');
+  localStorage.setItem('playerName', nameWithoutCheat);
+  localStorage.setItem('lobbyCode', event.lobbyCode);
+
+  this.router.navigate([`/game/${event.lobbyCode}`]);
+}
 
 }

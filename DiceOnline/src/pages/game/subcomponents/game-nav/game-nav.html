@@ -1,30 +1,57 @@
-<div class="flex flex-col h-full w-full bg-secondary border-8 ">
-
+<div class="flex flex-col h-full w-full bg-secondary/92 ">
+  <div class="h-[10%] w-full lg:max-w-5xl lg:mx-auto bg-primary flex items-center justify-center">
+    <div class="flex flex-row w-full justify-center h-full ">
+      <div class="flex flex-col w-1/2 ">
+        <button
+          [ngClass]="{
+        'text-accent': ChatTabActive,
+        'text-white': !ChatTabActive
+          }"
+          (click)="ChatTabActive = true; LobbyTabActive = false"
+          class="btn bg-primary/10 btn-sm border-none rounded-none hover:bg-secondary h-full text-xl">
+          Chat
+        </button>
+      </div>
+      <div class="flex flex-col w-1/2 ">
+        <button
+          [ngClass]="{
+        'text-accent': LobbyTabActive,
+        'text-white': !LobbyTabActive
+          }"
+          (click)="LobbyTabActive = true; ChatTabActive = false"
+          class="btn bg-primary/10 btn-sm border-none rounded-none hover:bg-secondary h-full text-xl">
+          Lobby
+        </button>
+      </div>
+    </div>
+  </div>
   <!-- Chat (60% van hoogte) -->
-  <div class="flex-[0_0_70%] overflow-y-auto">
+  <div *ngIf="ChatTabActive" class="h-[70%] overflow-y-auto">
     <app-chat></app-chat>
+  </div>
+    <div *ngIf="LobbyTabActive" class="h-[70%] overflow-y-auto">
+      <app-lobby-panel [players]="players" ></app-lobby-panel>
   </div>
 
   <!-- Buttons (40% van hoogte) -->
-<div class="flex flex-[0_0_30%] gap-2 p-2">
-  <div class="flex-row flex w-full ">
-    <button [ngClass]="{ 'opacity-50 cursor-not-allowed': disableButton }" [disabled]="disableButton"
-            class="flex-1 flex flex-col px-4 py-2 bg-accent text-white rounded-2xl hover:bg-green-600 text-4xl btn h-full hover:bg-green-700"
-            (click)="rollDices()">
-      
-      <!-- Roll tekst altijd gecentreerd -->
-      <span class="flex-1 flex items-center justify-center">Roll!</span>
+  <div class="flex h-[25%] gap-2 px-2 py-2">
+    <div class="flex-row flex w-full ">
+      <button [ngClass]="{ 'opacity-50 cursor-not-allowed': disableButton }" [disabled]="disableButton"
+        class="flex-1 flex flex-col px-4 py-2 bg-accent text-white rounded-2xl hover:bg-green-600 text-4xl  w-full btn h-full hover:bg-green-700"
+        (click)="rollDices()">
 
-      <!-- Progressbar wrapper, altijd aanwezig maar klein -->
-      <div class="h-4 my-2 w-full flex items-center justify-center">
-        <div *ngIf="disableButton" class="flex flex-row items-center w-full">
-          <span class="icon-[solar--clock-circle-bold-duotone] text-black/50 mr-2"></span>
-          <div class="progress h-2 w-full flex flex-col border border-gray-300">
-            <div class="h-full bg-green-500" [style.width.%]="progress"></div>
+        <!-- Roll tekst altijd gecentreerd -->
+        <span class="flex-1 flex items-center justify-center">Roll!</span>
+
+        <!-- Progressbar wrapper, altijd aanwezig maar klein -->
+        <div class="h-4 my-2 w-full flex items-center justify-center">
+          <div *ngIf="disableButton" class="flex flex-row items-center w-full">
+            <span class="icon-[solar--clock-circle-bold-duotone] text-black/50 mr-2"></span>
+            <div class="progress h-2 w-full flex flex-col border border-gray-300">
+              <div class="h-full bg-green-500" [style.width.%]="progress"></div>
+            </div>
           </div>
         </div>
-      </div>
 
-    </button>
-  </div>
-</div>
+      </button>
+    </div>

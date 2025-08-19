@@ -1,1 +1,46 @@
-<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="500" height="500"><style>.a{fill:#fff;stroke:#333;stroke-width:4}.b{fill:#f00}.c{fill:#00f}.d{fill:#008000}.e{fill:#ff0}.f{fill:#800080}</style><path fill-rule="evenodd" class="a" d="m14 2h72c6.6 0 12 5.4 12 12v72c0 6.6-5.4 12-12 12h-72c-6.6 0-12-5.4-12-12v-72c0-6.6 5.4-12 12-12z"/><path fill-rule="evenodd" class="b" d="m25 35c-5.5 0-10-4.5-10-10 0-5.5 4.5-10 10-10 5.5 0 10 4.5 10 10 0 5.5-4.5 10-10 10z"/><path fill-rule="evenodd" class="c" d="m75 35c-5.5 0-10-4.5-10-10 0-5.5 4.5-10 10-10 5.5 0 10 4.5 10 10 0 5.5-4.5 10-10 10z"/><path fill-rule="evenodd" class="d" d="m50 60c-5.5 0-10-4.5-10-10 0-5.5 4.5-10 10-10 5.5 0 10 4.5 10 10 0 5.5-4.5 10-10 10z"/><path fill-rule="evenodd" class="e" d="m25 85c-5.5 0-10-4.5-10-10 0-5.5 4.5-10 10-10 5.5 0 10 4.5 10 10 0 5.5-4.5 10-10 10z"/><path fill-rule="evenodd" class="f" d="m75 85c-5.5 0-10-4.5-10-10 0-5.5 4.5-10 10-10 5.5 0 10 4.5 10 10 0 5.5-4.5 10-10 10z"/></svg>
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="diceGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f0f0f0;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="shadowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#000000;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#000000;stop-opacity:0.1" />
+    </linearGradient>
+    <filter id="dropShadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feDropShadow dx="2" dy="4" stdDeviation="3" flood-color="#000000" flood-opacity="0.2"/>
+    </filter>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="45" fill="#2A6AF4" opacity="0.1"/>
+  
+  <!-- Dice shadow -->
+  <rect x="17" y="19" width="28" height="28" rx="4" fill="url(#shadowGradient)" opacity="0.3" transform="rotate(-15 31 33)"/>
+  
+  <!-- Main dice -->
+  <rect x="15" y="15" width="28" height="28" rx="4" fill="url(#diceGradient)" stroke="#2A6AF4" stroke-width="2" filter="url(#dropShadow)" transform="rotate(-15 29 29)"/>
+  
+  <!-- Dice dots -->
+  <circle cx="24" cy="24" r="2.5" fill="#2A6AF4" transform="rotate(-15 29 29)"/>
+  <circle cx="34" cy="34" r="2.5" fill="#2A6AF4" transform="rotate(-15 29 29)"/>
+  
+  <!-- Second dice shadow -->
+  <rect x="57" y="39" width="28" height="28" rx="4" fill="url(#shadowGradient)" opacity="0.3" transform="rotate(20 71 53)"/>
+  
+  <!-- Second dice -->
+  <rect x="55" y="35" width="28" height="28" rx="4" fill="url(#diceGradient)" stroke="#2A6AF4" stroke-width="2" filter="url(#dropShadow)" transform="rotate(20 69 49)"/>
+  
+  <!-- Second dice dots -->
+  <circle cx="64" cy="44" r="2.5" fill="#2A6AF4" transform="rotate(20 69 49)"/>
+  <circle cx="69" cy="49" r="2.5" fill="#2A6AF4" transform="rotate(20 69 49)"/>
+  <circle cx="74" cy="54" r="2.5" fill="#2A6AF4" transform="rotate(20 69 49)"/>
+  
+  <!-- Sparkle effects -->
+  <g opacity="0.6">
+    <path d="M25 8 L27 12 L31 10 L29 14 L33 16 L29 18 L31 22 L27 20 L25 24 L23 20 L19 22 L21 18 L17 16 L21 14 L19 10 L23 12 Z" fill="#2A6AF4" opacity="0.4"/>
+    <path d="M80 25 L81 27 L83 26 L82 28 L84 29 L82 30 L83 32 L81 31 L80 33 L79 31 L77 32 L78 30 L76 29 L78 28 L77 26 L79 27 Z" fill="#2A6AF4" opacity="0.6"/>
+    <path d="M35 75 L36 77 L38 76 L37 78 L39 79 L37 80 L38 82 L36 81 L35 83 L34 81 L32 82 L33 80 L31 79 L33 78 L32 76 L34 77 Z" fill="#2A6AF4" opacity="0.5"/>
+  </g>
+</svg>

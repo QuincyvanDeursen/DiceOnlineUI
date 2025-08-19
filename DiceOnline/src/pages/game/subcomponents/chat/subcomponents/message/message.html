@@ -3,19 +3,20 @@
 </ng-container>
 
 <ng-template #systemMessage>
-    <div class="flex flex-row w-full h-full bg-accent/30 p-3 border-b-2 border-accent text-white   ">
-        <p>
-            <small class="px-2">{{ timestamp | date:'HH:mm' }}</small><strong class="text-accent/100">PlayDice: </strong> {{ content }}
-        </p>
-    </div>
-
+  <div class="flex flex-row w-full h-full bg-accent/20 p-2 border-b border-accent/50 text-sm text-gray-300">
+    <p>
+      <span class="text-xs px-2 opacity-70">{{ timestamp | date:'HH:mm:ss' }}</span>
+      <strong class="text-accent">PlayDice:</strong> {{ content }}
+    </p>
+  </div>
 </ng-template>
+
 
 <ng-template #userMessage>
 
         <div class="flex flex-row w-full h-full bg-primary/10 p-3 border-b-2 border-primary text-white" >
             <p>
-                <small class="px-2">{{ timestamp | date:'HH:mm' }}</small><strong class="text-accent">{{ user }}: </strong> {{ content }}
+                <small class="px-2">{{ timestamp | date:'HH:mm:ss' }}</small><strong class="text-accent">{{ user }}: </strong> {{ content }}
             </p>
         </div>
 </ng-template>

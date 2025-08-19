@@ -1,7 +1,7 @@
-<div class="flex flex-col h-full w-full rounded shadow-lg bg-secondary">
+<div class="flex flex-col h-full w-full rounded shadow-lg">
 
   <!-- Chat messages container (70% hoogte) -->
-  <div #chatContainer class="flex-[0_0_80%] overflow-y-auto scrollbar-vertical scrollbar-accent">
+  <div #chatContainer class="h-[80%] overflow-y-auto scrollbar-vertical scrollbar-accent">
     <div *ngFor="let chat of chats">
       <app-message [user]="chat.user" [content]="chat.content" [timestamp]="chat.timestamp"
         [system]="chat.system || false">
@@ -10,7 +10,7 @@
   </div>
 
   <!-- Chat input (30% hoogte) -->
-  <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" class="flex flex-[0_0_20%] p-2 gap-2 ">
+  <form [formGroup]="chatForm" (ngSubmit)="sendMessage()" class="flex h-[20%] p-2 gap-2 ">
     <input formControlName="message" type="text" placeholder="Type your message..."
       class="flex-1 px-3 py-2 border rounded bg-white focus:outline-none focus:ring" autocomplete="off" required />
 

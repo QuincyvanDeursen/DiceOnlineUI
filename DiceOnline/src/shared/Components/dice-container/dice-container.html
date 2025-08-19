@@ -1,21 +1,27 @@
-<div 
-  class="relative flex items-center justify-center cursor-pointer transition-transform duration-200 w-full h-full"
-  [class.opacity-50]="locked"
-  [class.scale-90]="locked"
-  (click)="toggleLock()"
->
-  <!-- Dobbelsteen -->
+<div class="relative flex items-center justify-center cursor-pointer transition-transform duration-200 w-full h-full"
+     [class.opacity-50]="locked"
+     [class.scale-90]="locked"
+     (click)="toggleLock()">
+  
   <ng-container *ngIf="type === 'd6'; else d8Template">
     <div class="relative w-full h-full">
+      
+      <!-- Dice component -->
       <app-d6-dice #dice [value]="value" class="w-full h-full"></app-d6-dice>
 
-      <!-- Slotje rechts onderin, positioneren met % -->
+      <!-- Slotje rechts onderin -->
       <span 
         [ngClass]="locked  
           ? 'icon-[solar--lock-bold] text-error' 
           : 'icon-[solar--lock-unlocked-bold] text-success'"
-        class="absolute bottom-[0%] right-[0%] w-[18%] h-[18%]"
-      ></span>
+        class="absolute bottom-[0%] right-[0%] w-[18%] h-[18%]">
+      </span>
+
+      <!-- Romainse index links bovenin -->
+      <span class="absolute bottom-[0%] left-[0%] text-accent font-bold text-6xl">
+        {{ toRoman(diceId + 1) }}
+      </span>
+
     </div>
   </ng-container>
 

@@ -19,8 +19,6 @@ export class JoinModal {
 
   submitForm(form: NgForm) {
     if (form.invalid) return;
-
-    console.log('Joining with name:', this.name, 'and code:', this.lobbyCode);
     this.lobbyJoined.emit({ name: this.name, lobbyCode: this.lobbyCode });
   }
 }

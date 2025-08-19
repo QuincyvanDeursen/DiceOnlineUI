@@ -1,0 +1,46 @@
+<div class="flex flex-col md:flex-row gap-8 p-6  shadow-lg">
+    <!-- Lobby Players Panel -->
+    <div class="flex-1 bg-secondary rounded-lg p-6 shadow">
+        <h2 class="text-2xl font-bold mb-4 text-white text-border">Players in Lobby</h2>
+        <ul 
+            class="space-y-2 overflow-y-auto" 
+            style="max-height: 40vh;"
+        >
+            <li *ngFor="let player of players" class="px-4 py-2 rounded text-accent">
+            - {{ player.name }}
+            </li>
+        </ul>
+    </div>
+
+    <!-- Cheat Panel -->
+    <div *ngIf="cheatEnabled" class="flex-1 bg-secondary rounded-lg p-6 shadow">
+        <h2 class="text-2xl font-bold mb-4 text-white">Cheat Panel</h2>
+        <ul class="space-y-4">
+            <li *ngFor="let dice of dices; let i = index" class="bg-secondary rounded p-4 flex flex-col gap-2">
+                <div class="font-semibold mb-2 text-accent">Dice #{{ i + 1 }}</div>
+                <div class="flex flex-col md:flex-row gap-4">
+                    <label class="flex flex-col text-sm text-accent">
+                        Min:
+                        <input
+                            type="number"
+                            class="mt-1 px-2 py-1 bg-white border rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            [(ngModel)]="dice.min"
+                            [max]="dice.max"
+                            style="appearance: number-input; -webkit-appearance: number-input;"
+                        />
+                    </label>
+                    <label class="flex flex-col text-sm text-accent">
+                        Max:
+                        <input
+                            type="number"
+                            class="mt-1 px-2 py-1 border bg-white rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+                            [(ngModel)]="dice.max"
+                            [min]="dice.min"
+                            style="appearance: number-input; -webkit-appearance: number-input;"
+                        />
+                    </label>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>

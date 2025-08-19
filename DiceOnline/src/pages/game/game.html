@@ -1,7 +1,9 @@
 <div class="flex flex-col h-screen w-full">
-
+  <div class="h-[3%] w-full lg:max-w-5xl lg:mx-auto bg-primary flex items-center justify-center">
+    <p class="text-center text-secondary text-lg">Rolled by: <span class="text-accent">{{ rolledBy ? '' + rolledBy : 'No dice rolled yet' }}</span></p>
+  </div>
   <!-- Bovenste container: 45% -->
-  <div class="h-[45%] w-full  flex items-center justify-center  lg:max-w-5xl lg:mx-auto ">
+  <div class="h-[47%] w-full  flex items-center justify-center  lg:max-w-5xl lg:mx-auto ">
     <svg class="absolute inset-0 w-full h-full -z-10" preserveAspectRatio="xMidYMid slice" viewBox="0 0 120 120">
       <defs>
         <style>
@@ -45,15 +47,30 @@
       <path fill="#7da4f2" class="in-bottom"
         d="M102,67.1c-9.6-6.1-22-3.1-29.5,2-15.4,10.7-19.6,37.5-7.6,47.8s35.9,3.9,44.5-12.5C115.5,92.6,113.9,74.6,102,67.1Z" />
     </svg>
-    <div class="grid grid-cols-2 lg:grid-cols-3 gap-2 w-full h-full auto-rows-fr p-2">
-      <app-dice-container #container *ngFor="let dice of dices" [type]="dice.type" [value]="dice.value" [locked]="dice.locked" [diceId]="dice.id"
-        (lockedChangeEvent)="onDiceToggle(dice.id)" class="w-full h-full max-h-full"></app-dice-container>
-    </div>
+<div
+  [ngClass]="{
+    'p-5 grid grid-cols-1 place-items-center ': dices.length === 1,
+    'grid grid-cols-2 justify-items-center place-items-center p-2': dices.length === 2,
+    'grid grid-cols-2 lg:grid-cols-3 gap-2 w-full h-full auto-rows-fr p-2': dices.length > 2
+  }"
+>
+  <app-dice-container
+    #container
+    *ngFor="let dice of dices"
+    [type]="dice.type"
+    [value]="dice.value"
+    [locked]="dice.locked"
+    [diceId]="dice.id"
+    (lockedChangeEvent)="onDiceToggle(dice.id)"
+
+  ></app-dice-container>
+</div>
+
   </div>
 
   <!-- Onderste container: 55% -->
-  <div class="h-[55%] w-full lg:max-w-5xl lg:mx-auto ">
-    <app-game-nav  (rollEvent)="rollDices()"></app-game-nav>
+  <div class="h-[50%] w-full lg:max-w-5xl lg:mx-auto ">
+    <app-game-nav (rollEvent)="rollDices()" [players]="players"></app-game-nav>
   </div>
 
 </div>

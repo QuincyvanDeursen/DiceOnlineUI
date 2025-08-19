@@ -1,17 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Chat } from '../chat/chat';
+import { LobbyPanel } from '../lobbypanel/lobby-panel/lobby-panel';
 
 @Component({
   selector: 'app-game-nav',
-  imports: [CommonModule, Chat, FormsModule],
+  imports: [CommonModule, Chat, FormsModule, LobbyPanel],
   templateUrl: './game-nav.html',
   styleUrl: './game-nav.css'
 })
 export class GameNav {
+ChatTabActive = true;
+LobbyTabActive = false;
 
-
+@Input() players: any[] = [];
 @Output() rollEvent = new EventEmitter<void>();
 
 disableButton = false;

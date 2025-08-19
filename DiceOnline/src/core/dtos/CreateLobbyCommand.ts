@@ -1,7 +1,9 @@
-import { DiceSettings } from "../models/DiceSettings";
+import { Dice } from "../models/Dice";
+
+
 
 export interface CreateLobbyCommand {
-  PLayerName: string;
+  PlayerName: string;
   ConnectionId: string;
-  DiceSettings: DiceSettings;
+  Dices: Dice[];
 }

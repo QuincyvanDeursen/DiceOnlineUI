@@ -29,4 +29,8 @@ export class DiceContainer {
     this.lockedChangeEvent.emit();
   }
 
+  toRoman(num: number): string {
+  const romanNumerals = ['I','II','III','IV','V','VI','VII','VIII','IX','X'];
+  return romanNumerals[num - 1] || '';
+}
 }

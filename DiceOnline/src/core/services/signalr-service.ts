@@ -51,7 +51,6 @@ export class SignalRService {
       }
     });
     this.hubConnection.onclose((error) => {
-      console.error('SignalR connection closed:', error);
       this.connectionIdSubject.next(null);
     });
 
