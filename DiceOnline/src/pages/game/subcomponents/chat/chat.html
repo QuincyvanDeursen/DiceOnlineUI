@@ -2,9 +2,9 @@
 
   <!-- Chat messages container (70% hoogte) -->
   <div #chatContainer class="h-[80%] overflow-y-auto scrollbar-vertical scrollbar-accent">
-    <div *ngFor="let chat of chats">
-      <app-message [user]="chat.user" [content]="chat.content" [timestamp]="chat.timestamp"
-        [system]="chat.system || false">
+    <div *ngFor="let message of messages">
+      <app-message [user]="message.user" [content]="message.content" [timestamp]="message.timestamp"
+        [system]="message.system || false">
       </app-message>
     </div>
   </div>

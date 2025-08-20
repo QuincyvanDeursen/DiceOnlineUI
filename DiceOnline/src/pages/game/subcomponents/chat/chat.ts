@@ -15,7 +15,7 @@ import { Subject, takeUntil } from 'rxjs';
 export class Chat {
  @ViewChild('chatContainer') private chatContainer!: ElementRef;
   //#region Properties
-  @Input() chats: { user: string; content: string; timestamp: Date; system?: boolean }[] = [];
+  @Input() messages: Message[] = [];  
   private destroy$ = new Subject<void>();
   chatForm: FormGroup;
   //#endregion
@@ -50,7 +50,7 @@ export class Chat {
   private addFirstMessage() {
     const lobbyCode = this.getLobbyCodeFromLocalStorage();
     const content = `PlayDice welcomes you! The code of this lobby is ${lobbyCode}.`;
-    this.chats.push({
+    this.messages.push({
       user: '',
       content: content,
       timestamp: new Date(),
@@ -88,7 +88,7 @@ export class Chat {
       .pipe(takeUntil(this.destroy$))
       .subscribe(event => {
         if (event) {
-          this.chats.push({
+          this.messages.push({
             user: event.playerName,
             content: `${event.playerName} has joined the game.`,
             timestamp: new Date(),
@@ -103,7 +103,7 @@ export class Chat {
       .pipe(takeUntil(this.destroy$))
       .subscribe(event => {
         if (event) {
-          this.chats.push({
+          this.messages.push({
             user: event.playerName,
             content: `${event.playerName} has left the game.`,
             timestamp: new Date(),
@@ -118,7 +118,7 @@ export class Chat {
       .pipe(takeUntil(this.destroy$))
       .subscribe(message => {
         if (message) {
-          this.chats.push({
+          this.messages.push({
             user: message.playerName,
             content: message.message,
             timestamp: new Date(),
@@ -136,7 +136,7 @@ export class Chat {
             const diceResults = event.results
               .map(dice => `🎲[${toRoman(dice.index + 1)}, ${dice.value}]`)
               .join(', ');
-            this.chats.push({
+            this.messages.push({
               user: event.playerName,
               content: `Player ${event.playerName} rolled: ${diceResults}.`,
               timestamp: new Date(),

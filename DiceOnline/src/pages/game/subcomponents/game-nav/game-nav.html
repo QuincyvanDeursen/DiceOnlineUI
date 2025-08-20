@@ -26,13 +26,13 @@
     </div>
   </div>
   <!-- Chat (60% van hoogte) -->
-  <div *ngIf="ChatTabActive" class="h-[70%] overflow-y-auto">
-    <app-chat></app-chat>
-  </div>
-    <div *ngIf="LobbyTabActive" class="h-[70%] overflow-y-auto">
-      <app-lobby-panel [players]="players" ></app-lobby-panel>
-  </div>
+<div class="h-[70%] overflow-y-auto" [style.display]="ChatTabActive ? 'block' : 'none'">
+  <app-chat></app-chat>
+</div>
 
+<div class="h-[70%] overflow-y-auto" *ngIf="LobbyTabActive">
+  <app-lobby-panel [players]="players"></app-lobby-panel>
+</div>
   <!-- Buttons (40% van hoogte) -->
   <div class="flex h-[25%] gap-2 px-2 py-2">
     <div class="flex-row flex w-full ">

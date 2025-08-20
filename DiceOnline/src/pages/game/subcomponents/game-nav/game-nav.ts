@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Chat } from '../chat/chat';
 import { LobbyPanel } from '../lobbypanel/lobby-panel/lobby-panel';
+import { Message } from '../../../../core/models/message';
 
 @Component({
   selector: 'app-game-nav',
