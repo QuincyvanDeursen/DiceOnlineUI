@@ -11,3 +11,8 @@
   <app-message [user]="'User1'" [content]="'How are you?'" [system]="false" [timestamp]="date"></app-message>
   <app-message [user]="'System'" [content]="'I am just a bot, but thanks for asking!'" [system]="true" [timestamp]="date"></app-message>
 </div>
+
+<div>
+  <button (click)="showSuccess()">Show Success</button>
+  <button (click)="showError()">Show Error</button>
+</div>

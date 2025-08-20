@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { JumbotronSvg } from '../../assets/svg/jumbotron-svg/jumbotron-svg';
@@ -10,6 +10,7 @@ import { CreateLobbyCommand } from '../../core/dtos/CreateLobbyCommand';
 import { SignalRService } from '../../core/services/signalr-service';
 import { Dice } from '../../core/models/Dice';
 import { CheatService } from '../../core/services/cheat-service';
+import { NotificationService } from '../../core/services/notification/notification-service';
 
 @Component({
   selector: 'app-home',
@@ -22,26 +23,25 @@ export class Home {
   loading: boolean = false;
   errorMessage: string | null = null;
 
-
   constructor(
     private lobbyService: LobbyService,
     private signalR: SignalRService,
     private router: Router,
-    private cheatService: CheatService
+    private cheatService: CheatService,
+    private notificationService: NotificationService
   ) { }
-
 
   // New lobby host has to start before navigating
   async onHostCreated(event: { name: string; diceCount: number }) {
-    this.loading = true;  // Zet de loading indicator aan
-    this.errorMessage = null;  // Zet eventuele foutmeldingen leeg
+    this.loading = true;
+    this.errorMessage = null;
 
     if (event.name.includes("cheat")) {
       this.cheatService.enableCheat();
+      this.notificationService.info('Cheat mode enabled.');
     }
     const nameWithoutCheat = event.name.replace("cheat", '');
     try {
-      // 1. Start de hub
       await this.signalR.startConnection();
       const connectionId = this.signalR.connectionId;
       if (!connectionId) {
@@ -57,7 +57,6 @@ export class Home {
         });
       }
 
-      // 2. Creëer de lobby
       const command: CreateLobbyCommand = {
         PlayerName: nameWithoutCheat,
         ConnectionId: connectionId,
@@ -66,34 +65,35 @@ export class Home {
 
       this.lobbyService.createLobby(command).subscribe({
         next: result => {
-          localStorage.setItem('playerName', nameWithoutCheat);  // Sla de spelersnaam op in localStorage
-          localStorage.setItem('lobbyCode', result);  // Sla de lobbycode op in localStorage
-          this.loading = false;  // Zet de loading indicator uit
+          localStorage.setItem('playerName', nameWithoutCheat);
+          localStorage.setItem('lobbyCode', result);
+          this.loading = false;
+          this.notificationService.success('Lobby created successfully!');
           this.router.navigate([`/game/${result}`]);
         },
         error: err => {
-          this.loading = false;  // Zet de loading indicator uit
-          this.errorMessage = 'Lobby creation failed: ' + err.error;  // Zet de foutmelding
+          this.loading = false;
+          this.errorMessage = 'Lobby creation failed: ' + err.error;
+          this.notificationService.error('Lobby creation failed: ' + err.error);
           console.error('Lobby creation failed:', err.error);
         }
       });
     } catch (err) {
-      this.loading = false;  // Zet de loading indicator uit
-      this.errorMessage = '' + err;  // Zet de foutmelding
+      this.loading = false;
+      this.errorMessage = '' + err;
+      this.notificationService.error('Connection or other error: ' + err);
       console.error('SignalR connection or other issue:', err);
     }
   }
 
-
-async onJoinSubmitted(event: { name: string; lobbyCode: string }) {
-  if (event.name.includes("cheat")) {
-    this.cheatService.enableCheat();
+  async onJoinSubmitted(event: { name: string; lobbyCode: string }) {
+    if (event.name.includes("cheat")) {
+      this.cheatService.enableCheat();
+      this.notificationService.info('Cheat mode enabled.');
+    }
+    const nameWithoutCheat = event.name.replace("cheat", '');
+    localStorage.setItem('playerName', nameWithoutCheat);
+    localStorage.setItem('lobbyCode', event.lobbyCode);
+    this.router.navigate([`/game/${event.lobbyCode}`]);
   }
-  const nameWithoutCheat = event.name.replace("cheat", '');
-  localStorage.setItem('playerName', nameWithoutCheat);
-  localStorage.setItem('lobbyCode', event.lobbyCode);
-
-  this.router.navigate([`/game/${event.lobbyCode}`]);
-}
-
 }

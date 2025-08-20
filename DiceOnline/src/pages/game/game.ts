@@ -1,15 +1,15 @@
-import { Component, HostListener, QueryList, ViewChildren } from '@angular/core';
+import { Component, QueryList, ViewChildren } from '@angular/core';
 import { GameNav } from './subcomponents/game-nav/game-nav';
 import { DiceContainer } from '../../shared/Components/dice-container/dice-container';
 import { CommonModule } from '@angular/common';
 import { SignalRService } from '../../core/services/signalr-service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { LobbyService } from '../../core/services/lobby-service';
 import { Lobby } from '../../core/models/lobby';
 import { Subject, takeUntil } from 'rxjs';
 import { RollDiceCommand } from '../../core/dtos/RollDiceCommand';
 import { CheatService } from '../../core/services/cheat-service';
-import { Message } from 'postcss';
+import { NotificationService } from '../../core/services/notification/notification-service';
 
 @Component({
   selector: 'app-game',
@@ -29,19 +29,21 @@ export class Game {
   //#endregion
 
   //#region ctor + lifecycle
-  constructor(private signalRService: SignalRService, private route: ActivatedRoute, private lobbyService: LobbyService, private cheatService : CheatService,  private router: Router) {
-
-  }
+  constructor(
+    private signalRService: SignalRService,
+    private lobbyService: LobbyService,
+    private cheatService: CheatService,
+    private router: Router,
+    private notificationService: NotificationService
+  ) {}
 
   ngOnInit() {
     this.initGameConnection();
     this.getLobbyByCode();
-   
-  
   }
 
   ngAfterViewInit() {
-  this.startListeningToPlayerJoined();
+    this.startListeningToPlayerJoined();
     this.startListeningToPlayerLeft();
     this.startListeningToDiceRolled();
   }
@@ -57,7 +59,6 @@ export class Game {
   }
   //#endregion
 
-
   //#region game initialization
   private getLobbyByCode() {
     const lobbyCode = localStorage.getItem('lobbyCode');
@@ -70,6 +71,7 @@ export class Game {
         },
         error: err => {
           console.error('Error fetching lobby from localStorage:', err);
+          this.notificationService.error('Failed to fetch lobby. Redirecting to home.');
           this.router.navigate(['/home']);
         }
       });
@@ -87,11 +89,9 @@ export class Game {
         max: d.maxValue ?? 6
       });
     }
-   this.cheatService.setDices(this.dices);
+    this.cheatService.setDices(this.dices);
   }
-
   //#endregion
-
 
   private startListeningToDiceRolled() {
     this.signalRService.diceRolled$
@@ -109,32 +109,33 @@ export class Game {
       });
   }
 
-    private startListeningToPlayerJoined() {
-      this.signalRService.playerJoined$
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(event => {
-          if (event) {
-            this.players.push({ name: event.playerName });
-            console.log('Player joined:', event.playerName);
-          }
-        });
-    }
-  
-    private startListeningToPlayerLeft() {
-      this.signalRService.playerLeft$
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(event => {
-          if (event) {
-            this.players = this.players.filter(p => p.name !== event.playerName);
-            console.log('Player left:', event.playerName);
-          }
-        });
-    }
+  private startListeningToPlayerJoined() {
+    this.signalRService.playerJoined$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(event => {
+        if (event) {
+          this.players.push({ name: event.playerName });
+          this.notificationService.info(`Player joined: ${event.playerName}`);
+        }
+      });
+  }
+
+  private startListeningToPlayerLeft() {
+    this.signalRService.playerLeft$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(event => {
+        if (event) {
+          this.players = this.players.filter(p => p.name !== event.playerName);
+          this.notificationService.info(`Player left: ${event.playerName}`);
+        }
+      });
+  }
 
   //#region game actions
 
   leaveLobby() {
     this.signalRService.stopConnection();
+    this.notificationService.info('You have left the lobby.');
   }
 
   onDiceToggle(diceId: number) {
@@ -145,7 +146,7 @@ export class Game {
   }
 
   rollDices() {
-    if(this.dices.every(dice => dice.locked)) return;
+    if (this.dices.every(dice => dice.locked)) return;
 
     const command: RollDiceCommand = {
       lobbyCode: this.lobby?.lobbyCode || '',
@@ -160,25 +161,22 @@ export class Game {
     };
 
     this.lobbyService.rollDice(command).subscribe({
-      next: () => {
-      },
+      next: () => {},
       error: err => {
         console.error('Error rolling dice:', err);
+        this.notificationService.error('Failed to roll dice.');
       }
     });
   }
 
   unlockAllDices() {
-    //wait 1sec
     setTimeout(() => {
       this.dices.forEach(dice => {
         dice.locked = false;
       });
     }, 1000);
   }
-
   //#endregion
-
 
   private async initGameConnection(): Promise<void> {
     try {
@@ -206,11 +204,15 @@ export class Game {
           ConnectionId: connectionId
         }).subscribe({
           next: () => this.players.push({ name: playerName }),
-          error: err => console.error('Failed to re-join lobby', err)
+          error: err => {
+            console.error('Failed to re-join lobby', err);
+            this.notificationService.error('Failed to re-join lobby.');
+          }
         });
       }
     } catch (err) {
       console.error('Failed to init game connection', err);
+      this.notificationService.error('Failed to initialize game connection.');
     }
   }
 }

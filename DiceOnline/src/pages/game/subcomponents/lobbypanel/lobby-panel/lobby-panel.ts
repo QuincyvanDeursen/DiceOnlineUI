@@ -4,6 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { CheatService } from '../../../../../core/services/cheat-service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lobby-panel',
@@ -16,14 +17,15 @@ export class LobbyPanel {
   @Input() players: any[] = [];
   cheatEnabled: boolean = false;
   dices: { id: number; type: 'd6' | 'd8'; value: number; min: number; max: number; locked: boolean }[] = [];
+  lobbyCode: string = '';
 
   private destroy$ = new Subject<void>();
 
-  constructor(private cheatService: CheatService) { }
+  constructor(private cheatService: CheatService, private router: Router) { }
 
   ngOnInit() {
     this.startListeningToCheatEnabled();
-    console.log('LobbyPanel initialized with players:', this.players);
+    this.lobbyCode = localStorage.getItem('lobbyCode') || '';
   }
 
   ngOnDestroy() {
@@ -45,5 +47,15 @@ export class LobbyPanel {
             this.cheatEnabled = false;
           }
         });
+    }
+
+    copyLobbyCode() {
+      navigator.clipboard.writeText(this.lobbyCode).then(() => {
+        console.log('Lobby code copied to clipboard:', this.lobbyCode);
+      });
+    }
+
+    leaveLobby() {
+      this.router.navigate(['/home']);
     }
 }
